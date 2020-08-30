@@ -1,0 +1,25 @@
+---
+# tasks file for loadbalancer
+- name: Installing haproxy
+  package:
+    name: "haproxy"
+    state: present
+  become: true
+  become_user: root
+  become_method: sudo
+
+
+- name: Haproxy config copy
+  template:
+    src: "haproxy.cfg"
+    dest: "/etc/haproxy/haproxy.cfg"
+  become: true
+  become_method: sudo	
+
+- name: starting haproxy
+  service:
+    name: "haproxy"
+    state: started
+  become: true
+  become_user: root
+  become_method: sudo

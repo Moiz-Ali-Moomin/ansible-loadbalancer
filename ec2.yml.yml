@@ -1,0 +1,38 @@
+--- 
+- 
+  hosts: localhost
+  tasks: 
+    - 
+      ec2: 
+        assign_public_ip: true
+        count: 3
+        group_id: sg-b12effc4
+        image: ami-0cd31be676780afa7
+        instance_tags: 
+          provisioner: ansible
+          type: web-server
+        instance_type: t2.micro
+        key_name: key5253
+        region: ap-southeast-1
+        state: present
+        vpc_subnet_id: subnet-5d837b15 
+        wait: true
+      name: "Setting UP webserver"
+      register: ipa
+    - 
+      ec2: 
+        assign_public_ip: true
+        count: 1
+        group_id: sg-b12effc4
+        image: ami-0cd31be676780afa7
+        instance_tags: 
+          provisioner: ansible
+          type: load-balancer
+        instance_type: t2.micro
+        key_name: key5253
+        region: ap-southeast-1
+        state: present
+        vpc_subnet_id: subnet-5d837b15
+        wait: true
+      name: "Setting up load balancer"
+      register: loadbalancer

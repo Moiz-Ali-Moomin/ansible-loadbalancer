@@ -1,0 +1,26 @@
+---
+# tasks file for webserver
+- name: "install httpd"
+  package:
+    name: "httpd"
+    state: present
+  become: true
+  become_user: root
+  become_method: sudo
+
+
+- name: Copy
+  copy:
+    content: "You are inside - {{  ansible_hostname }}"
+    dest: /var/www/html/index.html
+  become: true
+  become_user: root
+  become_method: sudo
+
+- name: "restart httpd"
+  service:
+    name: "httpd"
+    state: started
+  become: true
+  become_user: root
+  become_method: sudo
